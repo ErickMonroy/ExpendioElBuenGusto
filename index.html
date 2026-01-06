@@ -5,557 +5,406 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expendio El Buen Gusto</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="img/LOGO.ico" type="image/png">
-
-
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 <body>
-    <div class="header" >
+    <div class="header">
         <div class="logo">
-          &nbsp;  &nbsp;  &nbsp; <img alt="El Buen Gusto Logo" height="100" src="img/LOGOSF.png" width="100" onclick="window.location.href='index.html';" />
-            
+            &nbsp; &nbsp; &nbsp; <img alt="El Buen Gusto Logo" height="100" src="img/LOGOSF.png" width="100"
+                onclick="window.location.href='index.html';" />
         </div>
 
         <div class="menu">
-            <div class="cart-icon" >
-                <i class="fas fa-shopping-cart" onclick="window.location.href='cart.html';"></i>&nbsp; &nbsp; 
+            <div class="cart-icon">
+                <i class="fas fa-shopping-cart" onclick="window.location.href='pages/cart.html';"></i>&nbsp; &nbsp;
                 <i class="fas fa-search" onclick="toggleSearchBar()"></i>
             </div>
             <div class="search-bar" id="searchBar">
-              <input type="text" id="searchInput" placeholder="Buscar..." onkeydown="if(event.key === 'Enter') search()">
-          </div>          
-              <i class="fas fa-bars" onclick="toggleMenu()"></i>
-              <ul id="menu-list" class="menu-items">
-                  <li><a href="Sucursal.html">Sucursal</a></li>
-                  <li><a href="QuienesSomos.html">Quiénes Somos</a></li>
-                  <li><a href="promociones.html">Promociones</a></li>
-              </ul>
-          </div>
-          &nbsp;  &nbsp;  &nbsp;  &nbsp; 
+                <input type="text" id="searchInput" placeholder="Buscar..."
+                    onkeydown="if(event.key === 'Enter') search()">
+            </div>
+            <i class="fas fa-bars" onclick="toggleMenu()"></i>
+            <ul id="menu-list" class="menu-items">
+                <li><a href="pages/Sucursal.html">Sucursal</a></li>
+                <li><a href="pages/QuienesSomos.html">Quiénes Somos</a></li>
+                <!--<li><a href="pages/promociones.html">Promociones</a></li>-->
+            </ul>
         </div>
-  
+        &nbsp; &nbsp; &nbsp; &nbsp;
+    </div>
 
     <div class="main">
-      <div class="carousel">
-        <div class="carousel-inner">
-         <div class="carousel-item">
-          <img alt="Medovik cake with strawberries and berries"  src="img/Carrusel3.png" />
-         </div>
-         <div class="carousel-item">
-          <img alt="Medovik cake with strawberries and berries" height="600" src="img/carrusel1.jpg" width="1200"/>
-         </div>
-         <div class="carousel-item">
-          <img alt="Medovik cake with strawberries and berries" height="600" src="img/Carrusel2.jpg" width="1200"/>
-         </div>
+        <div class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item">
+                    <img alt="Medovik cake with strawberries and berries" src="img/Carrusel3.png" />
+                </div>
+                <div class="carousel-item">
+                    <img alt="Medovik cake with strawberries and berries" height="600" src="img/carrusel1.jpg"
+                        width="1200" />
+                </div>
+                <div class="carousel-item">
+                    <img alt="Medovik cake with strawberries and berries" height="600" src="img/Carrusel2.jpg"
+                        width="1200" />
+                </div>
+            </div>
+            <button class="carousel-control left" onclick="prevSlide()">
+                &#10094;
+            </button>
+            <button class="carousel-control right" onclick="nextSlide()">
+                &#10095;
+            </button>
+            <div class="text">
+                <h1>Expendio "El Buen Gusto"</h1>
+                <h2>Calidad En Cada Bocado</h2>
+            </div>
         </div>
-        <button class="carousel-control left" onclick="prevSlide()">
-         &#10094;
-        </button>
-        <button class="carousel-control right" onclick="nextSlide()">
-         &#10095;
-        </button>
-        <div class="text">
-         <h1>
-          Expendio "El Buen Gusto"
-         </h1>
-         <h2>
-          Calidad En Cada Bocado
-         </h2>
-         
-        </div>
-       </div>
-      </div>
-      <div class="social-icons" id="social-icons">
+    </div>
+
+    <div class="social-icons" id="social-icons">
         <a class="facebook" href="#">
-         <i class="fab fa-facebook-f">
-         </i>
+            <i class="fab fa-facebook-f"></i>
         </a>
         <a class="instagram" href="#">
-         <i class="fab fa-instagram">
-         </i>
+            <i class="fab fa-instagram"></i>
         </a>
         <a class="tiktok" href="#">
-         <i class="fab fa-tiktok">
-         </i>
+            <i class="fab fa-tiktok"></i>
         </a>
         <a class="whatsapp" href="#">
-         <i class="fab fa-whatsapp">
-         </i>
+            <i class="fab fa-whatsapp"></i>
         </a>
-       </div>
-        </div>
-      </div>
     </div>
 
     <header class="Variedad">
-      <p>&nbsp;</p>
+        <p>&nbsp;</p>
     </header>
+
     <h2 class="Variedad-texto">Variedad de pan</h2>
 
-
-
-   <div class="product-container" >
-
-    <div class="gallery-item"><br>
-      <img alt="Imagen del Producto 1" height="10" src="img/bolillo.jpg" width="50"/>
-      <h3>
-       Bolillo
-      </h3>
-      <p>
-        $2.00 pza
-      </p>
-      <br>
-      
-      <div class="quantity-selector">
-        <button onclick="decreaseQuantity(this)">
-         -
-        </button>
-        <input readonly="" type="text" value="1"/>
-        <button onclick="increaseQuantity(this)">
-         +
-        </button>
-       </div>
-      <button class="add-to-cart">
-       Añadir al carrito
-       <i class="fas fa-shopping-cart">
-       </i>
-      </button>
-      
-     </div>
-     <div class="gallery-item">
-      <img alt="Imagen del Producto 2" height="50" src="img/Telera.jpg" width="50"/>
-      <h3>
-       Telera con ajonjolí
-      </h3>
-      <p>
-        $2.00 pza
-      </p>
-      <div class="quantity-selector">
-        <button onclick="decreaseQuantity(this)">
-         -
-        </button>
-        <input readonly="" type="text" value="1"/>
-        <button onclick="increaseQuantity(this)">
-         +
-        </button>
-       </div>
-      <button class="add-to-cart">
-       Añadir al carrito
-       <i class="fas fa-shopping-cart">
-       </i>
-      </button>
-      
-     </div>
-     <div class="gallery-item">
-      <img alt="Imagen del Producto 3" height="50" src="img/Bagette chico.jpg" width="50"/>
-      <h3>
-        Baguettine
-      </h3>
-      <p>
-        $12.50 pza
-      </p>
-      <div class="quantity-selector">
-        <button onclick="decreaseQuantity(this)">
-         -
-        </button>
-        <input readonly="" type="text" value="1"/>
-        <button onclick="increaseQuantity(this)">
-         +
-        </button>
-       </div>
-      <button class="add-to-cart">
-       Añadir al carrito
-       <i class="fas fa-shopping-cart">
-       </i>
-      </button>
-     </div>
-     <div class="gallery-item">
-      <img alt="Imagen del Producto 4" height="50" src="img/Baguette.jpg" width="50"/>
-      <h3>
-        Baguette
-      </h3>
-      <p>
-        $29.50 pza
-      </p>
-      <div class="quantity-selector">
-        <button onclick="decreaseQuantity(this)">
-         -
-        </button>
-        <input readonly="" type="text" value="1"/>
-        <button onclick="increaseQuantity(this)">
-         +
-        </button>
-       </div>
-      <button class="add-to-cart">
-       Añadir al carrito
-       <i class="fas fa-shopping-cart">
-       </i>
-      </button>
-     </div>
-         <div class="gallery-item">
-          <img alt="Imagen del Producto 1" height="50" src="img/DONAS.jpg" width="50"/>
-          <h3>
-           Donas cubiertas con chocolate
-          </h3>
-          <p>
-            $9 pza
-          </p>
-          <div class="quantity-selector">
-            <button onclick="decreaseQuantity(this)">
-             -
-            </button>
-            <input readonly="" type="text" value="1"/>
-            <button onclick="increaseQuantity(this)">
-             +
-            </button>
-           </div>
-          <button class="add-to-cart">
-           Añadir al carrito
-           <i class="fas fa-shopping-cart">
-           </i>
-          </button>
-          
-         </div>
-         <div class="gallery-item">
-          <img alt="Imagen del Producto 2" height="50" src="img/DonasAzucar.jpg" width="50"/>
-          <h3>
+    <div class="product-container">
+        <!-- Producto 1 -->
+        <div class="gallery-item"><br>
+            <img alt="Bolillo" height="10" src="img/bolillo.jpg" width="50" />
+            <h3>Bolillo</h3>
+            <p>$2.00 pza</p>
             <br>
-           Donas de azucar
-          </h3>
-          <p>
-            $9 pza
-          </p>
-          <div class="quantity-selector">
-            <button onclick="decreaseQuantity(this)">
-             -
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
             </button>
-            <input readonly="" type="text" value="1"/>
-            <button onclick="increaseQuantity(this)">
-             +
-            </button>
-           </div>
-          <button class="add-to-cart">
-           Añadir al carrito
-           <i class="fas fa-shopping-cart">
-           </i>
-          </button>
-          
-         </div>
-         <div class="gallery-item">
-          <img alt="Imagen del Producto 3" height="50" src="img/Donas glaseadas.jpg" width="50"/>
-          <h3>
-           Donas glaseadas blancas
-          </h3>
-          <p>
-            $12 pza
-          </p>
-          <div class="quantity-selector">
-            <button onclick="decreaseQuantity(this)">
-             -
-            </button>
-            <input readonly="" type="text" value="1"/>
-            <button onclick="increaseQuantity(this)">
-             +
-            </button>
-           </div>
-          <button class="add-to-cart">
-           Añadir al carrito
-           <i class="fas fa-shopping-cart">
-           </i>
-          </button>
-         </div>
-         <div class="gallery-item">
-          <img alt="Imagen del Producto 4" height="50" src="img/Donas rosas.jpg" width="50"/>
-          <h3>
-           Donas glaseadas rosas
-          </h3>
-          <p>
-            $12 pza
-          </p>
-          <div class="quantity-selector">
-            <button onclick="decreaseQuantity(this)">
-             -
-            </button>
-            <input readonly="" type="text" value="1"/>
-            <button onclick="increaseQuantity(this)">
-             +
-            </button>
-           </div>
-          <button class="add-to-cart">
-           Añadir al carrito
-           <i class="fas fa-shopping-cart">
-           </i>
-          </button>
-          
-         </div>
-         <div class="gallery-item">
-          <img alt="Imagen del Producto 5" height="50" src="img/Mil hojas.png" width="50"/>
-          <h3>
-            <br>
-           Mil hojas
-          </h3>
-          <p>$9 pza</p>
-          <div class="quantity-selector">
-            <button onclick="decreaseQuantity(this)">
-             -
-            </button>
-            <input readonly="" type="text" value="1"/>
-            <button onclick="increaseQuantity(this)">
-             +
-            </button>
-           </div>
-          <button class="add-to-cart">
-           Añadir al carrito
-           <i class="fas fa-shopping-cart">
-           </i>
-          </button>
-          
-         </div>
-         <div class="gallery-item">
-          <img alt="Imagen del Producto 1" height="50" src="img/Concha vainilla.jpg" width="50"/>
-          <h3>
-           Concha-vainilla
-          </h3>
-          <p>$8 pza</p>
-          <div class="quantity-selector">
-            <button onclick="decreaseQuantity(this)">
-             -
-            </button>
-            <input readonly="" type="text" value="1"/>
-            <button onclick="increaseQuantity(this)">
-             +
-            </button>
-           </div>
-          <button class="add-to-cart">
-           Añadir al carrito
-           <i class="fas fa-shopping-cart">
-           </i>
-          </button>
-          
-         </div>
-         <div class="gallery-item">
-          <img alt="Imagen del Producto 2" height="50" src="img/Concha chocolate.jpg" width="50"/>
-          <h3>
-           Concha-chocolate
-          </h3>
-          <p>$8 pza</p>
-          <div class="quantity-selector">
-            <button onclick="decreaseQuantity(this)">
-             -
-            </button>
-            <input readonly="" type="text" value="1"/>
-            <button onclick="increaseQuantity(this)">
-             +
-            </button>
-           </div>
-          <button class="add-to-cart">
-           Añadir al carrito
-           <i class="fas fa-shopping-cart">
-           </i>
-          </button>
-          
-         </div>
-         <div class="gallery-item">
-          <img alt="Imagen del Producto 3" height="50" src="img/concha fresa.jpg" width="50"/>
-          <h3>
-            Concha-fresa
-          </h3>
-          <p>$8 pza</p>
-          <div class="quantity-selector">
-            <button onclick="decreaseQuantity(this)">
-             -
-            </button>
-            <input readonly="" type="text" value="1"/>
-            <button onclick="increaseQuantity(this)">
-             +
-            </button>
-           </div>
-          <button class="add-to-cart">
-           Añadir al carrito
-           <i class="fas fa-shopping-cart">
-           </i>
-          </button>
-          
-         </div>
-         <div class="gallery-item"><br>
-          <img alt="Imagen del Producto 4" height="50" src="img/Oreja.jpg" width="50"/>
-          <h3><br>
-           Oreja
-          </h3>
-          <p>$9 pza</p><br>
-          <div class="quantity-selector">
-            <button onclick="decreaseQuantity(this)">
-             -
-            </button>
-            <input readonly="" type="text" value="1"/>
-            <button onclick="increaseQuantity(this)">
-             +
-            </button>
-           </div>
-          <button class="add-to-cart">
-           Añadir al carrito
-           <i class="fas fa-shopping-cart">
-           </i>
-          </button>
-          
-         </div>
-         <div class="gallery-item">
-          <img alt="Imagen del Producto 5" height="50" src="img/Piedra.jpg" width="50"/>
-          <h3>
-           Piedra
-          </h3>
-          <p>$9 pza</p>
-          <div class="quantity-selector">
-            <button onclick="decreaseQuantity(this)">
-             -
-            </button>
-            <input readonly="" type="text" value="1"/>
-            <button onclick="increaseQuantity(this)">
-             +
-            </button>
-            
-           </div>
-           <button class="add-to-cart">
-            Añadir al carrito
-            <i class="fas fa-shopping-cart">
-            </i>
-           </button>
+        </div>
 
-          </div>
-          <div class="gallery-item">
-           <img alt="Imagen del Producto 1" height="50" src="img/pan-ojo-de-buey.jpg" width="50"/>
-           <h3>
-            Ojo de buey
-           </h3>
-           <p>$8 pza</p>
-           <div class="quantity-selector">
-             <button onclick="decreaseQuantity(this)">
-              -
-             </button>
-             <input readonly="" type="text" value="1"/>
-             <button onclick="increaseQuantity(this)">
-              +
-             </button>
+        <!-- Producto 2 -->
+        <div class="gallery-item">
+            <img alt="Telera" height="50" src="img/Telera.jpg" width="50" />
+            <h3>Telera con ajonjolí</h3>
+            <p>$2.00 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
             </div>
-           <button class="add-to-cart">
-            Añadir al carrito
-            <i class="fas fa-shopping-cart">
-            </i>
-           </button>
-           
-          </div>
-          <div class="gallery-item"><br>
-           <img alt="Imagen del Producto 2" height="50" src="img/Beso.png" width="50"/>
-           <h3>
-            <br>
-            Beso
-           </h3>
-           <p>$8 pza</p><br>
-           <div class="quantity-selector">
-             <button onclick="decreaseQuantity(this)">
-              -
-             </button>
-             <input readonly="" type="text" value="1"/>
-             <button onclick="increaseQuantity(this)">
-              +
-             </button>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 3 -->
+        <div class="gallery-item">
+            <img alt="Baguettine" height="50" src="img/Bagette chico.jpg" width="50" />
+            <h3>Baguettine</h3>
+            <p>$12.50 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
             </div>
-           <button class="add-to-cart">
-            Añadir al carrito
-            <i class="fas fa-shopping-cart">
-            </i>
-           </button>
-           
-          </div>
-          <div class="gallery-item">
-           <img alt="Imagen del Producto 3" height="50" src="img/Moño.jpg" width="50"/>
-           <h3>
-             Moño
-           </h3>
-           <p>$8 pza</p>
-           <div class="quantity-selector">
-             <button onclick="decreaseQuantity(this)">
-              -
-             </button>
-             <input readonly="" type="text" value="1"/>
-             <button onclick="increaseQuantity(this)">
-              +
-             </button>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 4 -->
+        <div class="gallery-item">
+            <img alt="Baguette" height="50" src="img/Baguette.jpg" width="50" />
+            <h3>Baguette</h3>
+            <p>$29.50 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
             </div>
-           <button class="add-to-cart">
-            Añadir al carrito
-            <i class="fas fa-shopping-cart">
-            </i>
-           </button>
-           
-          </div>
-          <div class="gallery-item">
-           <img alt="Imagen del Producto 4" height="50" src="img/Cuernito.jpg" width="50"/>
-           <h3>
-            Cuernito
-           </h3>
-           <p>$9 pza</p>
-           <div class="quantity-selector">
-             <button onclick="decreaseQuantity(this)">
-              -
-             </button>
-             <input readonly="" type="text" value="1"/>
-             <button onclick="increaseQuantity(this)">
-              +
-             </button>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 5 -->
+        <div class="gallery-item">
+            <img alt="Donas chocolate" height="50" src="img/DONAS.jpg" width="50" />
+            <h3>Donas cubiertas con chocolate</h3>
+            <p>$9 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
             </div>
-           <button class="add-to-cart">
-            Añadir al carrito
-            <i class="fas fa-shopping-cart">
-            </i>
-           </button>
-           
-          </div>
-          <div class="gallery-item">
-           <img alt="Imagen del Producto 5" height="50" src="img/Panque  nuez.jpg" width="50"/>
-           <h3>
-            Panque de nuez
-           </h3>
-           <p>$13 pza</p>
-           <div class="quantity-selector">
-             <button onclick="decreaseQuantity(this)">
-              -
-             </button>
-             <input readonly="" type="text" value="1"/>
-             <button onclick="increaseQuantity(this)">
-              +
-             </button>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 6 -->
+        <div class="gallery-item">
+            <img alt="Donas azúcar" height="50" src="img/DonasAzucar.jpg" width="50" />
+            <h3><br>Donas de azucar</h3>
+            <p>$9 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
             </div>
-           
-          
-          <button class="add-to-cart">
-           Añadir al carrito
-           <i class="fas fa-shopping-cart">
-           </i>
-          </button>
-          
-         </div>
-        </div> 
-        
-        <div class="barra">
-          
-          <div class="logofinal">
-            <a href="#"> <img alt="El Buen Gusto Logo" height="100" src="img/LOGO.ico" width="100" />
-            </a>
-              <p>©2024 EXPENDIO EL BUEN GUSTO - TODOS LOS DERECHOS RESERVADOS</p>
-          </div>
-          
-      </div>
-        
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 7 -->
+        <div class="gallery-item">
+            <img alt="Donas glaseadas blancas" height="50" src="img/Donas glaseadas.jpg" width="50" />
+            <h3>Donas glaseadas blancas</h3>
+            <p>$12 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 8 -->
+        <div class="gallery-item">
+            <img alt="Donas glaseadas rosas" height="50" src="img/Donas rosas.jpg" width="50" />
+            <h3>Donas glaseadas rosas</h3>
+            <p>$12 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 9 -->
+        <div class="gallery-item">
+            <img alt="Mil hojas" height="50" src="img/Mil hojas.png" width="50" />
+            <h3><br>Mil hojas</h3>
+            <p>$9 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 10 -->
+        <div class="gallery-item">
+            <img alt="Concha vainilla" height="50" src="img/Concha vainilla.jpg" width="50" />
+            <h3>Concha-vainilla</h3>
+            <p>$8 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 11 -->
+        <div class="gallery-item">
+            <img alt="Concha chocolate" height="50" src="img/Concha chocolate.jpg" width="50" />
+            <h3>Concha-chocolate</h3>
+            <p>$8 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 12 -->
+        <div class="gallery-item">
+            <img alt="Concha fresa" height="50" src="img/concha fresa.jpg" width="50" />
+            <h3>Concha-fresa</h3>
+            <p>$8 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 13 -->
+        <div class="gallery-item"><br>
+            <img alt="Oreja" height="50" src="img/Oreja.jpg" width="50" />
+            <h3><br>Oreja</h3>
+            <p>$9 pza</p><br>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 14 -->
+        <div class="gallery-item">
+            <img alt="Piedra" height="50" src="img/Piedra.jpg" width="50" />
+            <h3>Piedra</h3>
+            <p>$9 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 15 -->
+        <div class="gallery-item">
+            <img alt="Ojo de buey" height="50" src="img/pan-ojo-de-buey.jpg" width="50" />
+            <h3>Ojo de buey</h3>
+            <p>$8 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 16 -->
+        <div class="gallery-item"><br>
+            <img alt="Beso" height="50" src="img/Beso.png" width="50" />
+            <h3><br>Beso</h3>
+            <p>$8 pza</p><br>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 17 -->
+        <div class="gallery-item">
+            <img alt="Moño" height="50" src="img/Moño.jpg" width="50" />
+            <h3>Moño</h3>
+            <p>$8 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 18 -->
+        <div class="gallery-item">
+            <img alt="Cuernito" height="50" src="img/Cuernito.jpg" width="50" />
+            <h3>Cuernito</h3>
+            <p>$9 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Producto 19 -->
+        <div class="gallery-item">
+            <img alt="Panque de nuez" height="50" src="img/Panque  nuez.jpg" width="50" />
+            <h3>Panque de nuez</h3>
+            <p>$13 pza</p>
+            <div class="quantity-selector">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input readonly type="text" value="1" />
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+            <button class="add-to-cart">
+                Añadir al carrito
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
     </div>
 
-    <script src="main.js"></script>
-  </body>
+    <div class="barra">
+        <div class="logofinal">
+            <a href="#"> <img alt="El Buen Gusto Logo" height="70" src="img/LOGO.ico" width="70" /></a>
+            <p>©2024 EXPENDIO EL BUEN GUSTO - TODOS LOS DERECHOS RESERVADOS</p>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
 </html>
