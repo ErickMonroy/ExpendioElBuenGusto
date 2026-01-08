@@ -23,19 +23,34 @@
         </div>
 
         <div class="menu">
+           
+            <div class="auth-menu" id="auth-menu">
+                <a href="pages/login.html" id="login-link">
+                    <i class="fas fa-user"></i> Iniciar Sesión
+                </a>
+                <span id="user-info" style="display: none;">
+                    <i class="fas fa-user"></i> <span id="username-display"></span>
+                    <a href="#" onclick="logout()">(Cerrar Sesión)</a>
+                </span>
+            </div>
+
             <div class="cart-icon">
                 <i class="fas fa-shopping-cart" onclick="window.location.href='pages/cart.html';"></i>&nbsp; &nbsp;
                 <i class="fas fa-search" onclick="toggleSearchBar()"></i>
             </div>
+
             <div class="search-bar" id="searchBar">
                 <input type="text" id="searchInput" placeholder="Buscar..."
                     onkeydown="if(event.key === 'Enter') search()">
             </div>
+
             <i class="fas fa-bars" onclick="toggleMenu()"></i>
+
             <ul id="menu-list" class="menu-items">
                 <li><a href="pages/Sucursal.html">Sucursal</a></li>
                 <li><a href="pages/QuienesSomos.html">Quiénes Somos</a></li>
                 <!--<li><a href="pages/promociones.html">Promociones</a></li>-->
+                <!-- Remover el auth-menu de aquí -->
             </ul>
         </div>
         &nbsp; &nbsp; &nbsp; &nbsp;
@@ -399,7 +414,9 @@
 
     <div class="barra">
         <div class="logofinal">
-            <a href="#"> <img alt="El Buen Gusto Logo" height="70" src="img/LOGO.ico" width="70" /></a>
+            <a href="#"><br>
+                <img alt="El Buen Gusto Logo" src="img/2.png" style="width: 120px; height: auto;" />
+            </a>
             <p>©2024 EXPENDIO EL BUEN GUSTO - TODOS LOS DERECHOS RESERVADOS</p>
         </div>
     </div>
