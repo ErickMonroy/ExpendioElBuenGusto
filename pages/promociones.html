@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promociones - Expendio El Buen Gusto</title>
+    <link rel="stylesheet" href="../css/styles2.css">
+    <link rel="icon" href="../img/LOGO.ico" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+   <div class="header">
+        <div class="logo">
+            &nbsp; &nbsp; &nbsp; <img alt="El Buen Gusto Logo" height="100" src="../img/LOGOSF.png" width="100" />
+            <header class="titulo">
+                <h1>Promociones</h1>
+            </header>
+        </div>
+
+        <div class="menu">
+            <div class="cart-icon">
+                <a class="linkinicio" href="../index.html"><i>Inicio</i></a>
+            </div>
+            <div class="search-bar" id="searchBar">
+                <input type="text" id="searchInput" placeholder="Buscar..." onkeydown="if(event.key === 'Enter') search()">
+            </div>
+            <i class="fas fa-bars" onclick="toggleMenu()"></i>
+            <ul id="menu-list" class="menu-items">
+                <li><a href="Sucursal.html">Sucursal</a></li>
+                <li><a href="QuienesSomos.html">Quiénes Somos</a></li>
+                <li><a href="#">Promociones</a></li>
+            </ul>
+        </div>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+    </div>
+    
+    <header class="Variedad">
+        <p>&nbsp;</p>
+    </header>
+    
+    <main>
+        <section class="promociones">
+            <ul>
+                <li>
+                    <h3>¡Calidad y ahorro en cada bocado! <span class="validez">Válido hasta el 15 de septiembre</span></h3>
+                    <p>¡Llévate más por menos! Compra 12 panes y obtén un 10% de descuento en tu compra.</p>
+                    <div class="codigo-promo">
+                        <h4>Código:</h4>
+                        <p class="codigo">AHORROMASXXXXXXX</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="promociones">
+            <ul>
+                <li>
+                    <h3>¡Porque recomendar es compartir! <span class="validez">Válido hasta el 28 de septiembre</span></h3>
+                    <p>¡Comparte el sabor! Recomienda a un amigo y ambos reciben un 10% de descuento en su próxima compra.</p>
+                    <div class="codigo-promo">
+                        <h4>Código:</h4>
+                        <p class="codigo">AMIGOSCXXXXX</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <div class="barra">
+        <div class="logofinal">
+            <a href="#"> <img alt="El Buen Gusto Logo" height="70" src="../img/LOGO.ico" width="70" /></a>
+            <p>©2024 EXPENDIO EL BUEN GUSTO - TODOS LOS DERECHOS RESERVADOS</p>
+        </div>
+    </div>
+    
+    <div class="social-icons" id="social-icons">
+        <a class="facebook" href="#">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a class="instagram" href="#">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a class="tiktok" href="#">
+            <i class="fab fa-tiktok"></i>
+        </a>
+        <a class="whatsapp" href="#">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
