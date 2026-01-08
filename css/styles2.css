@@ -680,3 +680,66 @@ body {
     }
 }
 
+
+@media (max-width: 768px) {
+    .Somos {
+        padding: 15px 10px !important;
+    }
+    
+    .Somos .contenedor-interno {
+        padding: 15px 10px;
+    }
+    
+    .Somos h1 {
+        font-size: 1.8em !important;
+    }
+    
+    .Somos h2 {
+        font-size: 1.5em !important;
+    }
+    
+    .Somos h3 {
+        font-size: 1.2em !important;
+    }
+    
+    .Somos p {
+        font-size: 1em !important;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 480px) {
+    .Somos {
+        padding: 10px 5px !important;
+    }
+    
+    .Somos .contenedor-interno {
+        padding: 10px 5px;
+    }
+    
+    .Somos h1 {
+        font-size: 1.5em !important;
+    }
+    
+    .Somos h2 {
+        font-size: 1.3em !important;
+    }
+    
+    .Somos h3 {
+        font-size: 1.1em !important;
+    }
+    
+    /* Forzar columnas a apilarse en móviles */
+    .Somos .columna,
+    .Somos .column,
+    .Somos .col {
+        width: 100% !important;
+        float: none !important;
+        margin: 10px 0 !important;
+    }
+    
+    /* Ajustar flex containers en móviles */
+    .Somos .flex-container {
+        flex-direction: column !important;
+    }
+}

@@ -401,10 +401,11 @@ body {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    margin-right: 10px;
     background-color: #f8f8f8;
     position: absolute;
     right: 0;
-    top: 60px;
+    top: 100px;
     width: 200px;
     border-radius: 5px;
     z-index: 100;
@@ -429,6 +430,8 @@ body {
     display: block;
 }
 
+
+
 .text {
     color: #ffffff;
 }
@@ -436,6 +439,7 @@ body {
 .fas fa-bars {
     color: #5f3915;
 }
+
 
 .Variedad {
     margin-top: 2px;
@@ -705,4 +709,375 @@ body {
 /* Icono del carrito con posición relativa */
 .fa-shopping-cart {
     position: relative;
+}
+
+
+/* Estilos para auth-menu al lado del carrito - Diseño compacto ovalado/rectangular */
+.auth-menu {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    height: 32px;
+}
+
+/* ESTILOS PARA PC (se aplican por defecto) */
+.auth-menu #login-link {
+    color: #5f3915;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 6px 15px;
+    border-radius: 20px;
+    background-color: #f8f0e5;
+    border: 1.5px solid #e0d2c1;
+    font-weight: 500;
+    font-size: 0.9em; /* TEXTO VISIBLE EN PC */
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(95, 57, 21, 0.1);
+    height: 30px;
+}
+
+.auth-menu #login-link:hover {
+    background-color: #5f3915;
+    color: white;
+    border-color: #5f3915;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(95, 57, 21, 0.15);
+}
+
+.auth-menu #login-link:active {
+    transform: translateY(0);
+}
+
+.auth-menu #login-link i {
+    margin-right: 6px;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.auth-menu #login-link:hover i {
+    color: white;
+}
+
+/* Estilo para cuando el usuario está logeado - versión compacta PC */
+.auth-menu #user-info {
+    display: flex;
+    align-items: center;
+    color: #5f3915;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: #f8f0e5;
+    border: 1.5px solid #d4b996;
+    box-shadow: 0 1px 3px rgba(95, 57, 21, 0.1);
+    height: 30px;
+    position: relative;
+    font-size: 0.85em; /* TEXTO VISIBLE EN PC */
+}
+
+.auth-menu #user-info i {
+    margin-right: 6px;
+    color: #8b5a2b;
+    font-size: 13px;
+}
+
+.auth-menu #user-info span {
+    color: #5f3915;
+    font-weight: 500;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline; /* VISIBLE EN PC */
+}
+
+.auth-menu #user-info a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 10px;
+    font-weight: normal;
+    font-size: 0.75em;
+    background-color: #ff6b6b;
+    padding: 2px 8px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    border: 1px solid #ff5252;
+    display: inline; /* VISIBLE EN PC */
+}
+
+.auth-menu #user-info a:hover {
+    background-color: #ff5252;
+    box-shadow: 0 1px 3px rgba(255, 82, 82, 0.3);
+}
+
+/* Indicador de usuario activo - PC */
+.auth-menu #user-info::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 6px;
+    height: 6px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    border: 1.5px solid #f8f0e5;
+    z-index: 1;
+}
+
+/* ========== MEDIA QUERIES PARA MÓVILES ========== */
+
+/* Para tablets y teléfonos grandes */
+@media (max-width: 768px) {
+    .auth-menu {
+        margin-right: 8px;
+        display: flex !important;
+    }
+    
+    /* Aquí comenzamos a reducir el texto */
+    .auth-menu #login-link,
+    .auth-menu #user-info {
+        padding: 4px 8px;
+        font-size: 0.8em; /* Texto más pequeño */
+        height: 26px;
+        border-radius: 18px;
+    }
+    
+    .auth-menu #login-link i,
+    .auth-menu #user-info i {
+        margin-right: 4px;
+        font-size: 11px;
+    }
+    
+    .auth-menu #user-info span {
+        max-width: 80px;
+    }
+    
+    .auth-menu #user-info a {
+        padding: 2px 6px;
+        font-size: 0.7em;
+        margin-left: 8px;
+        border-radius: 10px;
+    }
+    
+    .auth-menu #user-info::before {
+        width: 5px;
+        height: 5px;
+        border-width: 1px;
+    }
+}
+
+/* Para teléfonos móviles - SOLO ICONO, SIN TEXTO */
+@media (max-width: 480px) {
+    .auth-menu {
+        display: flex !important;
+        margin-right: 6px;
+    }
+    
+    /* Versión SOLO ICONO - usuario NO logeado */
+    .auth-menu #login-link {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f0e5;
+        border: 1.5px solid #e0d2c1;
+        box-shadow: 0 1px 3px rgba(95, 57, 21, 0.1);
+        transition: all 0.2s ease;
+        position: relative;
+        font-size: 0 !important; /* SOLO EN MÓVILES: ocultar texto */
+    }
+    
+    /* Asegurar que solo se vea el icono en móviles */
+    .auth-menu #login-link i {
+        color: #5f3915;
+        font-size: 16px;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    /* ELIMINAR el margin-right del icono SOLO en móviles */
+    @media (max-width: 480px) {
+        .auth-menu #login-link i {
+            margin-right: 0 !important;
+        }
+    }
+    
+    /* Tooltip para mostrar "Iniciar Sesión" en móviles */
+    .auth-menu #login-link::after {
+        content: 'Iniciar Sesión';
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 5px;
+        background-color: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        z-index: 1000;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        font-size: 11px;
+    }
+    
+    .auth-menu #login-link:hover::after {
+        opacity: 1;
+    }
+    
+    .auth-menu #login-link:hover {
+        background-color: #5f3915;
+        transform: scale(1.05);
+    }
+    
+    .auth-menu #login-link:hover i {
+        color: white;
+    }
+    
+    /* Versión SOLO ICONO - usuario SÍ logeado EN MÓVILES */
+    .auth-menu #user-info {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #5f3915, #8b5a2b);
+        border: 1.5px solid white;
+        box-shadow: 0 1px 3px rgba(95, 57, 21, 0.2);
+        position: relative;
+        font-size: 0 !important; /* SOLO EN MÓVILES: ocultar texto */
+    }
+    
+    .auth-menu #user-info i {
+        color: white;
+        font-size: 16px;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    /* ELIMINAR el margin-right del icono SOLO en móviles */
+    @media (max-width: 480px) {
+        .auth-menu #user-info i {
+            margin-right: 0 !important;
+        }
+    }
+    
+    /* OCULTAR TODO EL TEXTO SOLO EN MÓVILES */
+    @media (max-width: 480px) {
+        .auth-menu #user-info span,
+        .auth-menu #user-info a,
+        .auth-menu #username-display {
+            display: none !important;
+            visibility: hidden !important;
+            width: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+            position: absolute !important;
+            opacity: 0 !important;
+        }
+    }
+    
+    /* Tooltip para mostrar nombre en móviles */
+    .auth-menu #user-info::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 5px;
+        background-color: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        z-index: 1000;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        font-size: 11px;
+    }
+    
+    .auth-menu #user-info:hover::after {
+        opacity: 1;
+    }
+    
+    /* Punto indicador de sesión activa - ajustado para móviles */
+    .auth-menu #user-info::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 8px;
+        height: 8px;
+        background-color: #4CAF50;
+        border-radius: 50%;
+        border: 2px solid #f8f0e5;
+        z-index: 1;
+    }
+    
+    /* Ocultar versión móvil en menú hamburguesa */
+    .auth-menu-mobile {
+        display: none !important;
+    }
+}
+
+/* Para teléfonos muy pequeños */
+@media (max-width: 360px) {
+    .auth-menu {
+        margin-right: 4px;
+    }
+    
+    .auth-menu #login-link,
+    .auth-menu #user-info {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .auth-menu #login-link i,
+    .auth-menu #user-info i {
+        font-size: 14px;
+    }
+    
+    .auth-menu #user-info::before {
+        width: 6px;
+        height: 6px;
+    }
+    
+    /* Tooltips más pequeños */
+    .auth-menu #login-link::after,
+    .auth-menu #user-info::after {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+}
+
+/* Asegurar que todos los elementos del menú estén alineados */
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.auth-menu #user-info,
+.auth-menu #login-link {
+    animation: fadeIn 0.2s ease-out;
 }
