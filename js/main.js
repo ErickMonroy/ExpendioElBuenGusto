@@ -1,6 +1,88 @@
+
 // Array para almacenar productos añadidos temporalmente
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let currentIndex = 0;
+let currentUser = null;
+
+// ========== FUNCIONES DE AUTENTICACIÓN ==========
+
+// Verificar estado de login al cargar
+function checkLoginStatus() {
+    const savedUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+    if (savedUser && savedUser.loggedIn) {
+        currentUser = savedUser;
+        updateAuthUI();
+    }
+}
+
+// Actualizar la interfaz de autenticación
+function updateAuthUI() {
+    const loginLink = document.getElementById('login-link');
+    const userInfo = document.getElementById('user-info');
+    const usernameDisplay = document.getElementById('username-display');
+
+    if (currentUser && loginLink && userInfo && usernameDisplay) {
+        loginLink.style.display = 'none';
+        userInfo.style.display = 'inline';
+        usernameDisplay.textContent = currentUser.name;
+    } else if (loginLink && userInfo) {
+        loginLink.style.display = 'inline';
+        userInfo.style.display = 'none';
+    }
+}
+
+// Función de logout
+function logout() {
+    Swal.fire({
+        title: '¿Cerrar sesión?',
+        text: 'Se eliminarán los productos de tu carrito',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, cerrar sesión',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('cart');
+            
+            updateAuthUI();
+            updateCartCounter();
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Sesión cerrada',
+                text: 'Has cerrado sesión correctamente',
+                timer: 1500,
+                showConfirmButton: false
+            }).then(() => {
+                location.reload();
+            });
+        }
+    });
+}
+
+// Verificar si el usuario está logeado y redirigir si no lo está
+function checkLoginAndRedirect() {
+    if (!currentUser) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Inicia sesión',
+            text: 'Debes iniciar sesión para agregar productos al carrito',
+            confirmButtonText: 'Ir a Iniciar Sesión',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'pages/login.html';
+            }
+        });
+        return false;
+    }
+    return true;
+}
 
 // ========== FUNCIONES DEL CARRITO ==========
 
@@ -75,6 +157,11 @@ function createCartCounter() {
 
 // Función para añadir al carrito CON NOTIFICACIÓN PEQUEÑA
 function addToCart(productName, price, quantityInput) {
+    // Verificar si el usuario está logeado
+    if (!checkLoginAndRedirect()) {
+        return;
+    }
+    
     const quantity = parseInt(quantityInput.value);
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     const existingProduct = cart.find(item => item.name === productName);
@@ -110,7 +197,9 @@ function addToCart(productName, price, quantityInput) {
         html: `
             <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
                 <div style="text-align: left;">
-             
+                    <div style="font-size: 14px; font-weight: bold; margin-bottom: 3px;">
+                        ${productName}
+                    </div>
                     <div style="font-size: 12px; color: #666;">
                         ${quantity} x $${price.toFixed(2)} = <strong>$${(price * quantity).toFixed(2)}</strong>
                     </div>
@@ -130,6 +219,11 @@ function addToCart(productName, price, quantityInput) {
 
 // ========== FUNCIONES DE CANTIDAD ==========
 function increaseQuantity(button) {
+    // Verificar si el usuario está logeado
+    if (!checkLoginAndRedirect()) {
+        return;
+    }
+    
     const input = button.previousElementSibling;
     let value = parseInt(input.value, 10);
     value = isNaN(value) ? 1 : value + 1;
@@ -137,6 +231,11 @@ function increaseQuantity(button) {
 }
 
 function decreaseQuantity(button) {
+    // Verificar si el usuario está logeado
+    if (!checkLoginAndRedirect()) {
+        return;
+    }
+    
     const input = button.nextElementSibling;
     let value = parseInt(input.value, 10);
     value = isNaN(value) ? 1 : (value > 1 ? value - 1 : 1);
@@ -220,6 +319,9 @@ function search() {
 
 // ========== EVENT LISTENERS ==========
 document.addEventListener('DOMContentLoaded', function() {
+    // Verificar estado de login
+    checkLoginStatus();
+    
     // Iniciar carrusel automático
     if (document.querySelector('.carousel-item')) {
         setInterval(nextSlide, 6000);
@@ -276,3 +378,9 @@ document.addEventListener('DOMContentLoaded', function() {
 function goToCart() {
     window.location.href = 'pages/cart.html';
 }
+
+// Función para redirigir a login
+function goToLogin() {
+    window.location.href = 'pages/login.html';
+}
+
