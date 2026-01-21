@@ -5,7 +5,8 @@
   <h3>Sistema de ventas</h3>
 
   <img src="https://img.shields.io/badge/Web%20Tech-HTML5%2FCSS3%2FJS-007acc?style=for-the-badge&logo=webpack&logoColor=white" alt="Web Technologies">
-  <img src="https://img.shields.io/badge/Versión-1.0.0-red?style=for-the-badge" alt="Versión">
+  <img src="https://img.shields.io/badge/Database-Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" alt="Firebase">
+  <img src="https://img.shields.io/badge/Versión-1.1.0-red?style=for-the-badge" alt="Versión">
 
   <p align="right"><br>Fecha: 21 de diciembre del 2025</p>
 </div>
