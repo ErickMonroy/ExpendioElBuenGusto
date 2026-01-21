@@ -12,6 +12,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
     <style>
         .auth-container {
             max-width: 400px;
@@ -57,10 +62,37 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
+            position: relative;
         }
 
         .btn-primary:hover {
             background-color: #5f3915;
+        }
+
+        .btn-primary:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .btn-primary.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .auth-links {
@@ -91,9 +123,9 @@
             color: #333;
         }
 
-         .logo-auth {
+        .logo-auth {
             text-align: center;
- margin-top: -15px;
+            margin-top: -15px;
         }
 
         .logo-auth img {
@@ -104,8 +136,6 @@
 </head>
 
 <body>
-
-
     <div class="auth-container">
         <div class="logo-auth">
             <img alt="El Buen Gusto Logo" height="100" src="../img/LOGO.ico" width="100"
@@ -136,7 +166,9 @@
                 <input type="password" id="confirmPassword" required>
             </div>
 
-            <button type="submit" class="btn-primary">Crear Cuenta</button>
+            <button type="submit" class="btn-primary" id="submitBtn">
+                Crear Cuenta
+            </button>
 
             <div class="auth-links">
                 <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a></p>
@@ -148,27 +180,58 @@
         </form>
     </div>
 
-
-
     <script>
+        // 🔥 CONFIGURACIÓN DE FIREBASE 🔥
+        // REEMPLAZA CON TUS DATOS REALES DE FIREBASE
+        const firebaseConfig = {
+            apiKey: "AIzaSyChflNLXQ9666kML0EDJuw_LEdfCj6VYfg",
+            authDomain: "expendiobuengusto-5fb5c.firebaseapp.com",
+            projectId: "expendiobuengusto-5fb5c",
+            storageBucket: "expendiobuengusto-5fb5c.firebasestorage.app",
+            messagingSenderId: "241277656016",
+            appId: "1:241277656016:web:afee2b72523f7c4a0b37d5"
+        };
+
+        // Inicializar Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        const auth = firebase.auth();
+
         // Verificar si ya hay un usuario logeado
         document.addEventListener('DOMContentLoaded', function () {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-            if (currentUser) {
-                window.location.href = '../index.html';
-            }
+            console.log('Página cargada, verificando autenticación...');
+
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    console.log('Usuario ya autenticado, redirigiendo...');
+                    window.location.href = '../index.html';
+                }
+            });
         });
 
         // Manejar el formulario de registro
-        document.getElementById('registerForm').addEventListener('submit', function (e) {
+        document.getElementById('registerForm').addEventListener('submit', async function (e) {
             e.preventDefault();
+            console.log('Formulario enviado');
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
+            const submitBtn = document.getElementById('submitBtn');
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
-            // Validaciones
+            // Validaciones básicas
+            if (!name || !email || !password || !confirmPassword) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campos incompletos',
+                    text: 'Por favor completa todos los campos'
+                });
+                return;
+            }
+
             if (password !== confirmPassword) {
                 Swal.fire({
                     icon: 'error',
@@ -187,55 +250,100 @@
                 return;
             }
 
-            // Obtener usuarios existentes
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            // Deshabilitar botón y mostrar loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creando cuenta...';
+            submitBtn.classList.add('loading');
 
-            // Verificar si el usuario ya existe
-            if (users.some(u => u.email === email)) {
+            try {
+                console.log('Intentando crear usuario con Firebase...');
+
+                // Registrar usuario en Firebase
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                console.log('Usuario creado en Firebase:', user.uid);
+
+                // Actualizar el nombre del usuario
+                await user.updateProfile({
+                    displayName: name
+                });
+
+                console.log('Nombre actualizado');
+
+                // Guardar en localStorage
+                const userData = {
+                    uid: user.uid,
+                    name: name,
+                    email: email,
+                    loggedIn: true
+                };
+
+                localStorage.setItem('currentUser', JSON.stringify(userData));
+                console.log('Usuario guardado en localStorage');
+
+                // Mostrar mensaje de éxito
+                await Swal.fire({
+                    icon: 'success',
+                    title: '¡Registro exitoso!',
+                    text: 'Tu cuenta ha sido creada correctamente',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+
+                // Redirigir al index
+                window.location.href = '../index.html';
+
+            } catch (error) {
+                console.error('Error en registro:', error);
+
+                let errorMessage = 'Error al crear la cuenta';
+
+                switch (error.code) {
+                    case 'auth/email-already-in-use':
+                        errorMessage = 'Este correo ya está registrado';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Correo electrónico inválido';
+                        break;
+                    case 'auth/operation-not-allowed':
+                        errorMessage = 'La creación de cuentas está deshabilitada temporalmente';
+                        break;
+                    case 'auth/weak-password':
+                        errorMessage = 'La contraseña es muy débil. Usa al menos 6 caracteres';
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMessage = 'Error de conexión. Verifica tu internet';
+                        break;
+                }
+
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Este correo ya está registrado'
+                    text: errorMessage
                 });
-                return;
+
+                // Rehabilitar botón
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Crear Cuenta';
+                submitBtn.classList.remove('loading');
             }
-
-            // Agregar nuevo usuario
-            const newUser = {
-                name: name,
-                email: email,
-                password: password
-            };
-
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
-
-            // Iniciar sesión automáticamente
-            const userData = {
-                name: name,
-                email: email,
-                loggedIn: true
-            };
-
-            localStorage.setItem('currentUser', JSON.stringify(userData));
-
-            Swal.fire({
-                icon: 'success',
-                title: '¡Registro exitoso!',
-                text: 'Tu cuenta ha sido creada correctamente',
-                timer: 2000,
-                showConfirmButton: false
-            }).then(() => {
-                // Redirigir al index
-                window.location.href = '../index.html';
-            });
         });
 
-        // Función para alternar menú
-        function toggleMenu() {
-            const menuList = document.getElementById('menu-list');
-            menuList.classList.toggle('show');
-        }
+        // Función para debug: verificar si Firebase está cargado
+        window.onload = function () {
+            console.log('Firebase disponible:', typeof firebase !== 'undefined');
+            console.log('Auth disponible:', typeof auth !== 'undefined');
+
+            if (typeof firebase === 'undefined') {
+                console.error('Firebase no se cargó correctamente');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de configuración',
+                    text: 'No se pudo cargar Firebase. Verifica tu conexión a internet.'
+                });
+            }
+        };
     </script>
 </body>
 

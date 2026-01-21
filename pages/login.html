@@ -12,6 +12,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
     <style>
         .auth-container {
             max-width: 400px;
@@ -57,10 +62,37 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
+            position: relative;
         }
 
         .btn-primary:hover {
             background-color: #5f3915;
+        }
+
+        .btn-primary:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .btn-primary.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .auth-links {
@@ -100,12 +132,26 @@
             cursor: pointer;
             margin-bottom: -25px;
         }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #ac7d51;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
 <body>
-
-
     <div class="auth-container">
         <div class="logo-auth">
             <img alt="El Buen Gusto Logo" height="100" src="../img/LOGO.ico" width="100"
@@ -123,9 +169,14 @@
             <div class="form-group">
                 <label for="password">Contraseña:</label>
                 <input type="password" id="password" required>
+                <div class="forgot-password">
+                    <a href="#" onclick="forgotPassword()"><br>¿Olvidaste tu contraseña?</a>
+                </div>
             </div>
 
-            <button type="submit" class="btn-primary">Iniciar Sesión</button>
+            <button type="submit" class="btn-primary" id="submitBtn">
+                Iniciar Sesión
+            </button>
 
             <div class="auth-links">
                 <p>¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
@@ -137,63 +188,235 @@
         </form>
     </div>
 
-
-
     <script>
+        // 🔥 CONFIGURACIÓN DE FIREBASE 🔥
+        const firebaseConfig = {
+            apiKey: "AIzaSyChflNLXQ9666kML0EDJuw_LEdfCj6VYfg",
+            authDomain: "expendiobuengusto-5fb5c.firebaseapp.com",
+            projectId: "expendiobuengusto-5fb5c",
+            storageBucket: "expendiobuengusto-5fb5c.firebasestorage.app",
+            messagingSenderId: "241277656016",
+            appId: "1:241277656016:web:afee2b72523f7c4a0b37d5"
+        };
+
+        // Inicializar Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        const auth = firebase.auth();
+
         // Verificar si ya hay un usuario logeado
         document.addEventListener('DOMContentLoaded', function () {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-            if (currentUser) {
-                // Si ya está logeado, redirigir al index
-                window.location.href = '../index.html';
-            }
+            console.log('Login page loaded - checking auth state...');
+
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    console.log('User found:', user.email);
+
+                    // Mostrar opciones cuando ya está logueado
+                    Swal.fire({
+                        title: 'Ya tienes una sesión activa',
+                        html: `Actualmente estás logueado como: <strong>${user.email}</strong><br><br>¿Qué deseas hacer?`,
+                        icon: 'info',
+                        showDenyButton: true,
+                        showConfirmButton: true,
+                        confirmButtonText: 'Ir al inicio',
+                        denyButtonText: 'Cerrar sesión',
+                        confirmButtonColor: '#ac7d51',
+                        denyButtonColor: '#d33',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Guardar usuario en localStorage
+                            const userData = {
+                                uid: user.uid,
+                                name: user.displayName || user.email.split('@')[0],
+                                email: user.email,
+                                loggedIn: true
+                            };
+                            localStorage.setItem('currentUser', JSON.stringify(userData));
+                            window.location.href = '../index.html';
+                        } else if (result.isDenied) {
+                            // Cerrar sesión
+                            auth.signOut().then(() => {
+                                localStorage.removeItem('currentUser');
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Sesión cerrada',
+                                    text: 'Ahora puedes iniciar sesión con otra cuenta',
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                });
+                            });
+                        }
+                    });
+                } else {
+                    console.log('No user logged in, showing login form');
+                    localStorage.removeItem('currentUser');
+                }
+            });
         });
 
         // Manejar el formulario de login
-        document.getElementById('loginForm').addEventListener('submit', function (e) {
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
             e.preventDefault();
+            console.log('Login form submitted');
 
-            const email = document.getElementById('email').value;
+            const submitBtn = document.getElementById('submitBtn');
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
 
-            // Obtener usuarios registrados
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const user = users.find(u => u.email === email && u.password === password);
+            // Validaciones básicas
+            if (!email || !password) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campos incompletos',
+                    text: 'Por favor ingresa tu correo y contraseña'
+                });
+                return;
+            }
 
-            if (user) {
-                // Guardar usuario en sesión
+            // Deshabilitar botón y mostrar loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Iniciando sesión...';
+            submitBtn.classList.add('loading');
+
+            try {
+                console.log('Attempting to login with Firebase...');
+
+                // Autenticar con Firebase
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                console.log('Login successful for user:', user.uid);
+
+                // Guardar información básica en localStorage
                 const userData = {
-                    name: user.name,
+                    uid: user.uid,
+                    name: user.displayName || email.split('@')[0],
                     email: user.email,
                     loggedIn: true
                 };
+
                 localStorage.setItem('currentUser', JSON.stringify(userData));
+                console.log('User data saved to localStorage');
 
                 // Mostrar mensaje de éxito
-                Swal.fire({
+                await Swal.fire({
                     icon: 'success',
                     title: '¡Bienvenido!',
-                    text: `Has iniciado sesión como ${user.name}`,
+                    text: 'Has iniciado sesión correctamente',
                     timer: 2000,
                     showConfirmButton: false
-                }).then(() => {
-                    // Redirigir al index
-                    window.location.href = '../index.html';
                 });
-            } else {
+
+                // Redirigir al index
+                window.location.href = '../index.html';
+
+            } catch (error) {
+                console.error('Login error:', error);
+
+                let errorMessage = 'Error al iniciar sesión';
+
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        errorMessage = 'No existe una cuenta con este correo';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage = 'Contraseña incorrecta';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Correo electrónico inválido';
+                        break;
+                    case 'auth/user-disabled':
+                        errorMessage = 'Esta cuenta ha sido deshabilitada';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage = 'Demasiados intentos fallidos. Intenta más tarde';
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMessage = 'Error de conexión. Verifica tu internet';
+                        break;
+                    case 'auth/invalid-credential':
+                        errorMessage = 'Credenciales inválidas';
+                        break;
+                }
+
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Correo o contraseña incorrectos'
+                    text: errorMessage
                 });
+
+                // Rehabilitar botón
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Iniciar Sesión';
+                submitBtn.classList.remove('loading');
             }
         });
 
-        // Función para alternar menú (si la necesitas)
-        function toggleMenu() {
-            const menuList = document.getElementById('menu-list');
-            menuList.classList.toggle('show');
+        // Función para recuperar contraseña
+        function forgotPassword() {
+            Swal.fire({
+                title: 'Recuperar contraseña',
+                text: 'Ingresa tu correo electrónico para restablecer tu contraseña:',
+                input: 'email',
+                inputPlaceholder: 'tu@correo.com',
+                showCancelButton: true,
+                confirmButtonColor: '#ac7d51',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Enviar',
+                cancelButtonText: 'Cancelar',
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Debes ingresar un correo electrónico';
+                    }
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                        return 'Ingresa un correo válido';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const email = result.value;
+
+                    auth.sendPasswordResetEmail(email)
+                        .then(() => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Correo enviado',
+                                text: 'Revisa tu bandeja de entrada para restablecer tu contraseña'
+                            });
+                        })
+                        .catch((error) => {
+                            let errorMessage = 'No se pudo enviar el correo de recuperación';
+
+                            switch (error.code) {
+                                case 'auth/user-not-found':
+                                    errorMessage = 'No existe una cuenta con este correo';
+                                    break;
+                                case 'auth/invalid-email':
+                                    errorMessage = 'Correo electrónico inválido';
+                                    break;
+                                case 'auth/too-many-requests':
+                                    errorMessage = 'Demasiados intentos. Intenta más tarde';
+                                    break;
+                            }
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: errorMessage
+                            });
+                        });
+                }
+            });
         }
+
+        // Debug: verificar estado actual
+        console.log('Current auth state:', auth.currentUser);
+        console.log('LocalStorage user:', localStorage.getItem('currentUser'));
     </script>
 </body>
 
