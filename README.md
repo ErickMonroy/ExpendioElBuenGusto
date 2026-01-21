@@ -49,6 +49,7 @@
 
 ## Tecnologías Utilizadas  
 - **Frontend:** HTML5, CSS3, JS, SWeetAlert2, jsPDF
+- **Backend:** Firebase
 - **Almacenimiento de datos:** LocalStorage
 - **Dependencias Externas (via CDN):** jQuery 3.6.0, Font Awesome 5.15.3, Google Fonts
 
